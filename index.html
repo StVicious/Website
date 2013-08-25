@@ -103,11 +103,23 @@ if(sessionStorage.warningPage != "1"){
 		var myDataRef = new Firebase('https://garage-door-detector.firebaseIO.com/');
 $('#DoorValue').keypress(function (e) {
 		if (e.keyCode == 13) {
-			var DoorValue = $('#DoorValue').val()
-		myDataRef.set({DoorValue: DoorValue});
+		var doorvalue = $('#DoorValue').val()
+		myDataRef.set({doorvalue: doorvalue});
 		}
  		});
-	/*	myDataRef.on('child_changed', function(snapshot) {
+  /* 
+myDataRef.on('child_changed', function(snapshot) {
+  var userData = snapshot.val();
+  alert( userData.DoorValue );
+}); 
+*/
+	myDataRef.on('value', function(snapshot) {
+        var message = snapshot.val().doorvalue;
+	$('#DoorValueDiv').html(message);
+      });
+
+/*
+		myDataRef.on('child_changed', function(snapshot) {
 		var DoorValueVal = snapshot.val();
 		displayDoorValue(DoorValueVal.DoorValue);
 });
